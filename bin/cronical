@@ -1,0 +1,8 @@
+#!/bin/bash
+export PYTHONPATH=$(dirname $0)
+export CRONICAL_SETTINGS="${CRONICAL_SETTINGS:="/etc/cronical.conf"}"
+export CRONICAL_DEV="${CRONICAL_DEV:=True}"
+if [ ${CRONICAL_DEV} ]
+then /usr/bin/env gunicorn --reload -b "${CRONICAL_HOST:=0.0.0.0}:${CRONICAL_PORT:=1588}" cronical:app
+else /usr/bin/env gunicorn -b "${CRONICAL_HOST:=0.0.0.0}:${CRONICAL_PORT:=1588}" cronical:app
+fi
